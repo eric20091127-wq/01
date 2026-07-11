@@ -1,0 +1,314 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0a0a12;
+  --panel: #1a1a2e;
+  --border: #ffffff;
+  --accent: #ffff00;
+  --heart: #ff0044;
+  --bone: #f5f5f5;
+  --bullet: #44aaff;
+  --blaster: #ffffff;
+  --warning: #ff8800;
+  --text: #ffffff;
+  --muted: #888899;
+  --pixel: "Press Start 2P", monospace;
+  --sans: "Noto Sans TC", system-ui, sans-serif;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 50% 0%, #1a1030 0%, transparent 60%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.015) 2px,
+      rgba(255, 255, 255, 0.015) 4px
+    );
+  color: var(--text);
+  font-family: var(--sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+}
+
+.game-shell {
+  width: min(640px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.game-header {
+  text-align: center;
+}
+
+.game-title {
+  font-family: var(--pixel);
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-shadow: 2px 2px 0 #aa8800;
+  margin-bottom: 0.5rem;
+}
+
+.game-subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.battle-stage {
+  position: relative;
+  background: var(--panel);
+  border: 3px solid var(--border);
+  padding: 1rem;
+  box-shadow:
+    0 0 0 1px #333,
+    0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* 對話框 */
+.dialogue-box {
+  background: #000;
+  border: 2px solid var(--border);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  min-height: 4.5rem;
+}
+
+.dialogue-name {
+  display: block;
+  font-family: var(--pixel);
+  font-size: 0.55rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.dialogue-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* 狀態列 */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hp-panel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 180px;
+}
+
+.hp-label,
+.stat-label {
+  font-family: var(--pixel);
+  font-size: 0.5rem;
+  color: var(--accent);
+}
+
+.hp-bar {
+  flex: 1;
+  height: 14px;
+  background: #330000;
+  border: 2px solid var(--border);
+  position: relative;
+}
+
+.hp-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #ff0044, #ff6688);
+  transition: width 0.3s ease;
+}
+
+.hp-text {
+  font-family: var(--pixel);
+  font-size: 0.45rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.stat-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stat-value {
+  font-family: var(--pixel);
+  font-size: 0.55rem;
+  color: var(--text);
+}
+
+/* 戰鬥框 */
+.battle-box-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 560 / 400;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  image-rendering: pixelated;
+}
+
+.battle-box-border {
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--border);
+  pointer-events: none;
+}
+
+/* 覆蓋層 */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 1rem;
+}
+
+.overlay--hidden {
+  display: none;
+}
+
+.overlay-card {
+  background: #111;
+  border: 3px solid var(--border);
+  padding: 1.5rem;
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+}
+
+.overlay-card--gameover {
+  border-color: var(--heart);
+}
+
+.overlay-title {
+  font-family: var(--pixel);
+  font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+  color: var(--accent);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.overlay-card--gameover .overlay-title {
+  color: var(--heart);
+}
+
+.overlay-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.overlay-tips {
+  list-style: none;
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--accent);
+}
+
+.overlay-tips li {
+  padding: 0.25rem 0;
+}
+
+.overlay-tips li::before {
+  content: "▸ ";
+  color: var(--accent);
+}
+
+.btn-start {
+  font-family: var(--pixel);
+  font-size: 0.6rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 3px 3px 0 #aa8800;
+}
+
+.btn-start:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #aa8800;
+}
+
+.btn-start:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #aa8800;
+}
+
+/* 頁尾 */
+.game-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.game-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.game-footer a:hover {
+  text-decoration: underline;
+}
+
+.back-link {
+  font-size: 0.8rem;
+}
+
+/* 遊戲進行中隱藏系統游標，顯示自訂靈魂 */
+body.playing {
+  cursor: none;
+}
+
+@media (max-width: 480px) {
+  .status-bar {
+    gap: 0.5rem;
+  }
+
+  .dialogue-text {
+    font-size: 0.8rem;
+  }
+}

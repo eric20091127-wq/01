@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="滑鼠閃躲彈幕 — 以游標控制靈魂，在彈幕中生存"
+    />
+    <title>靈魂閃避戰 | Soul Dodge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dodge.css" />
+  </head>
+  <body>
+    <div class="game-shell">
+      <header class="game-header">
+        <h1 class="game-title">SOUL DODGE</h1>
+        <p class="game-subtitle">移動滑鼠控制紅色靈魂 · 閃躲彈幕攻擊</p>
+      </header>
+
+      <div class="battle-stage" id="battle-stage">
+        <!-- 對話框 -->
+        <div class="dialogue-box" id="dialogue-box" aria-live="polite">
+          <span class="dialogue-name" id="dialogue-name">???</span>
+          <p class="dialogue-text" id="dialogue-text">
+            準備好了嗎？把滑鼠移進戰鬥框內開始。
+          </p>
+        </div>
+
+        <!-- 狀態列 -->
+        <div class="status-bar">
+          <div class="hp-panel">
+            <span class="hp-label">HP</span>
+            <div class="hp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="20" id="hp-bar">
+              <div class="hp-fill" id="hp-fill"></div>
+            </div>
+            <span class="hp-text" id="hp-text">20 / 20</span>
+          </div>
+          <div class="stat-panel">
+            <span class="stat-label">時間</span>
+            <span class="stat-value" id="timer">0:00</span>
+          </div>
+          <div class="stat-panel">
+            <span class="stat-label">波次</span>
+            <span class="stat-value" id="wave">0</span>
+          </div>
+        </div>
+
+        <!-- 戰鬥框 -->
+        <div class="battle-box-wrap">
+          <canvas id="game-canvas" width="560" height="400" aria-label="戰鬥區域"></canvas>
+          <div class="battle-box-border" aria-hidden="true"></div>
+        </div>
+
+        <!-- 覆蓋層：開始 / 結束 -->
+        <div class="overlay" id="overlay">
+          <div class="overlay-card">
+            <h2 class="overlay-title" id="overlay-title">靈魂閃避戰</h2>
+            <p class="overlay-desc" id="overlay-desc">
+              將滑鼠移入黑色戰鬥框，紅色靈魂會跟隨游標移動。<br />
+              避開白色骨頭與藍色彈幕，撐越久越好！
+            </p>
+            <ul class="overlay-tips">
+              <li>被擊中會扣 1 HP，短暫無敵</li>
+              <li>波次越後面，彈幕越密集</li>
+              <li>離開戰鬥框時靈魂會停在邊界</li>
+            </ul>
+            <button type="button" class="btn-start" id="btn-start">開始戰鬥</button>
+          </div>
+        </div>
+
+        <div class="overlay overlay--hidden" id="gameover-overlay">
+          <div class="overlay-card overlay-card--gameover">
+            <h2 class="overlay-title">GAME OVER</h2>
+            <p class="overlay-desc" id="final-stats"></p>
+            <button type="button" class="btn-start" id="btn-restart">再戰一次</button>
+          </div>
+        </div>
+      </div>
+
+      <footer class="game-footer">
+        <p>靈感來自 <a href="https://jcw87.github.io/c2-sans-fight/" target="_blank" rel="noopener noreferrer">Bad Time Simulator</a></p>
+        <a href="index.html" class="back-link">← 返回作品集</a>
+      </footer>
+    </div>
+
+    <script src="dodge.js" defer></script>
+  </body>
+</html>
